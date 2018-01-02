@@ -21,6 +21,10 @@ function startTimer(duration, display) {
         if (--timer < 0) {
             timer = duration;
         }
+        // if (timer === 0) {
+        //     $("Sorry, you lost!").dialog();
+        //     clearInterval(timer);
+        //   }
     }, 1000);
 }
 
@@ -78,7 +82,7 @@ function renderQuestion(){
     test.innerHTML += "<input type='radio' name='choices' value='A'> "+chA+"<br>";
     test.innerHTML += "<input type='radio' name='choices' value='B'> "+chB+"<br>";
     test.innerHTML += "<input type='radio' name='choices' value='C'> "+chC+"<br><br>";
-    test.innerHTML += "<button onclick='checkAnswer() '>Submit' Answer</button>";
+    test.innerHTML += "<button onclick='checkAnswer() '>Submit Answer</button>";
 }
 
 function checkAnswer(){

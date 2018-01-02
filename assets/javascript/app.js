@@ -7,72 +7,104 @@ if(timeleft <= 0)
     clearInterval(downloadTimer);
 },1000);
 
+var pos = 0, test, test_status, question, choice, choices, chA, chB, chC, correct = 0;
+var questions = [
+    [ "What is Superman's birth name?", "Kal-El", "Clark Kent", "Barry Allen", "A" ],
+    [ "Which X-Men uses playing cards for weapons?", "Beast", "Rogue", "Gambit", "C" ],
+    [ "Who is Dick Grayson?", "Captian America", "Hulk", "Robin", "C" ],
+    [ "Who can control metal?", "Super Girl", "Magneto", "Batman", "B" ],
+    [ "Which superhero is nicknamed the Scarlett Speedster?", "Speedball", "The Flash", "The Thing", "B" ],
+    [ "Who is the leader of the X-Men?", "Cyclops", "Wolverine", "Storm", "A" ],
+    [ "What is Daredevil's real name?", "Scott Summers", "Matt Murdock", "Oliver Queen", "B" ],
+    [ "Cyclops is married to which X-Men?", "Kitty Pryde", "Storm", "Jean Grey", "C" ],
+    [ "Which avenger is Tony Stark?", "Iron Man", "Falcon", "Ant Man", "A" ],
+    [ "Which Justice League member can talk to fish?", "Cyborg", "Martian Manhunter", "Aquaman", "C" ],
+    [ "Who is Wade Wilson?", "Deadpool", "Bishop", "Cable", "A" ],
+    [ "Who is Peter Quill?", "Groot", "Gamora", "Star Lord", "C" ],
+    [ "Which villain is nicknamed Puddin?", "Penguin", "Joker", "Harley Quinn", "B" ],
+    [ "Who kills Superman?", "Doomsday", "Lex Luthor", "Zod", "B" ],
+    [ "Hal Jordan superhero identity?", "Sinestro", "Green Lantern", "Deadshot", "B" ],
+    [ "The Green Arrow's real identity?", "Wally West", "John Stewart", "Oliver Queen", "C" ],
+    [ "Who is the Red Hood?", "Jason Todd", "Luke Cage", "Pete Ross", "A" ],
+    [ "Who is Thor's brother?", "Ultron", "Loki", "Killer Croc", "B" ],
+    [ "Who is a member of The Fantastic Four?", "Human Torch", "Spider Man", "Hulk", "A" ],
+    [ "Bruce Banner's superhero name?", "Martian Manhunter", "Hulk", "Thanos", "B" ],           
+];
 
-// function DisplayQuestions() {
-//     var Questions = new Array(20);
-//     Questions[0] = "Question #1";
-//     Questions[1] = "Question #2";
-//     Questions[2] = "Question #3";
-//     Questions[3] = "Question #4";
-//     Questions[4] = "Question #5";
-//     Questions[5] = "Question #6";
-//     Questions[6] = "Question #7";
-//     Questions[7] = "Question #8";
-//     Questions[8] = "Question #9";
-//     Questions[9] = "Question #10";
-//     Questions[10] = "Question #11";
-//     Questions[11] = "Question #12";
-//     Questions[12] = "Question #13";
-//     Questions[13] = "Question #14";
-//     Questions[14] = "Question #15";
-//     Questions[15] = "Question #16";
-//     Questions[16] = "Question #17";
-//     Questions[17] = "Question #18";
-//     Questions[18] = "Question #19";
-//     Questions[19] = "Question #20";
-//     var QCount = 0;
+function _(x){
+    return document.getElementById(x);
+}
+
+function renderQuestion(){
+    test = _("test");
+    if(pos >= questions.length){
+        test.innerHTML = "<h2>You got "+correct+" of "+questions.length+" questions correct</h2>";
+        _("test_status").innerHTML = "Test Completed";
+        pos = 0;
+        correct = 0;
+        return fales; 
+    }
+    _("test_status").innerHTML = "Question "+(pos+1)+" of "+questions.length;
+    question = questions[pos][0];
+    chA = questions[pos][1];
+    chB = questions[pos][2];
+    chC = questions[pos][3];
+    test.innerHTML = "<h3>"+question+"</h3>";
+    test.innerHTML += "<input type='radio' name='choices' value='A'> "+chA+"<br>";
+    test.innerHTML += "<input type='radio' name='choices' value='B'> "+chB+"<br>";
+    test.innerHTML += "<input type='radio' name='choices' value='C'> "+chC+"<br><br>";
+    test.innerHTML += "<button onclick='checkAnswer() '>Submit' Answer</button>";
+}
+
+function checkAnswer(){
+   choices = document.getElementsByName("choices");
+   for(var i=0; i<choices.length; i++){
+       if(choices[i].checked){
+           choice = choices[i].value;
+       }
+   }
+   if(choice == questions[pos][4]){
+       correct++;
+   }
+   pos++;
+   renderQuestion();
+}
+
+window.addEventListener("load", renderQuestion, false);
+
+
+
+// window.onload=function() {
+
+//  function Questions(divname) {
+//     this.QText   = new Array(20); // The questions
+//     this.QAnswer = new Array(20); // The correct answers
+//     this.QChoice = new Array(80); // The possible multi-choice values
+//     this.thisAns = new Array(10); // The answers for this page
+//     this.Answer  = new Array(10); // The user's answers
+//     this.anchor = document.getElementById(divname);
  
-//     while (QCount < 20) {
-//        QNumber = Math.round(20 * Math.random());
-//        if (null != Questions[QNumber]) {
-//       alert("Question number " + QCount + " = " + Questions[QNumber]);
-//       QCount++;
-//       Questions[QNumber] = null; // Dump this question - it's been displayed
-//        }
-//     }
-//  }
-
-window.onload=function() {
-
- function Questions(divname) {
-    this.QText   = new Array(20); // The questions
-    this.QAnswer = new Array(20); // The correct answers
-    this.QChoice = new Array(80); // The possible multi-choice values
-    this.thisAns = new Array(10); // The answers for this page
-    this.Answer  = new Array(10); // The user's answers
-    this.anchor = document.getElementById(divname);
- 
-    // OK, set the questions
-    this.QText[0] = "What is Superman's birth name";
-    this.QText[1] = "Which X-Men uses playing cards for weapons";
-    this.QText[2] = "Who is Dick Grayson";
-    this.QText[3] = "Who can control metal";
-    this.QText[4] = "Which superhero is nicknamed the Scarlett Speedster";
-    this.QText[5] = "Who is the leader of the X-Men";
-    this.QText[6] = "Daredevil's real name is";
-    this.QText[7] = "Cyclops is married to which X-Men";
-    this.QText[8] = "Which avenger is Tony Stark";
-    this.QText[9] = "Which Justice League member can talk to fish";
-    this.QText[10] = "Who is Wade Wilson";
-    this.QText[11] = "Who is Peter Quill";
-    this.QText[12] = "Which villain is nicknamed Puddin";
-    this.QText[13] = "Who kills Superman";
-    this.QText[14] = "Hal Jordan superhero identity";
-    this.QText[15] = "The Green Arrow's real identity";
-    this.QText[16] = "Who is the Red Hood";
-    this.QText[17] = "Who is Thor's brother";
-    this.QText[18] = "Who is a member of The Fantastic Four";
-    this.QText[19] = "Bruce Banner's real name";
+    // // OK, set the questions
+    // this.QText[0] = "What is Superman's birth name";
+    // this.QText[1] = "Which X-Men uses playing cards for weapons";
+    // this.QText[2] = "Who is Dick Grayson";
+    // this.QText[3] = "Who can control metal";
+    // this.QText[4] = "Which superhero is nicknamed the Scarlett Speedster";
+    // this.QText[5] = "Who is the leader of the X-Men";
+    // this.QText[6] = "Daredevil's real name is";
+    // this.QText[7] = "Cyclops is married to which X-Men";
+    // this.QText[8] = "Which avenger is Tony Stark";
+    // this.QText[9] = "Which Justice League member can talk to fish";
+    // this.QText[10] = "Who is Wade Wilson";
+    // this.QText[11] = "Who is Peter Quill";
+    // this.QText[12] = "Which villain is nicknamed Puddin";
+    // this.QText[13] = "Who kills Superman";
+    // this.QText[14] = "Hal Jordan superhero identity";
+    // this.QText[15] = "The Green Arrow's real identity";
+    // this.QText[16] = "Who is the Red Hood";
+    // this.QText[17] = "Who is Thor's brother";
+    // this.QText[18] = "Who is a member of The Fantastic Four";
+    // this.QText[19] = "Bruce Banner's real name";
  
     // Now, set the possible choices
     this.QChoice[0] = "Kal-El";
@@ -178,94 +210,94 @@ window.onload=function() {
     this.QAnswer[18] = 73;
     this.QAnswer[19] = 8;
  
- }
+//  }
  
- Questions.prototype.generateQuiz = function() {
-    var QCount = 0;
-    var QNumber = 0;
+//  Questions.prototype.generateQuiz = function() {
+//     var QCount = 0;
+//     var QNumber = 0;
  
-    // Initialise the "questions available" table
-    var QUsed = new Array(20);
-    for (QCount=0; QCount<20; QCount++) {
-       QUsed[QCount] = 1; // Marked as available
-    }
+//     // Initialise the "questions available" table
+//     var QUsed = new Array(20);
+//     for (QCount=0; QCount<20; QCount++) {
+//        QUsed[QCount] = 1; // Marked as available
+//     }
  
-    // Delete any existing questions
-    //this.nukeExistingQuiz();
-    this.anchor.innerHTML = "";
+//     // Delete any existing questions
+//     //this.nukeExistingQuiz();
+//     this.anchor.innerHTML = "";
  
-    var HTMLBlob = "<table>";
+//     var HTMLBlob = "<table>";
  
-    // Build up the questions
-    for (QCount=0; QCount<10; ) {
-       QNumber = Math.floor(20 * Math.random());
-       if (1 == QUsed[QNumber]) { // Still available?
-      HTMLBlob += this.AddQuestion(QNumber, QCount);
-      QCount++;
-          QUsed[QNumber] = 0; // Marked as unavailable
-       }
-    }
-    HTMLBlob += "</table>";
-    this.anchor.innerHTML = HTMLBlob;
- }
+//     // Build up the questions
+//     for (QCount=0; QCount<10; ) {
+//        QNumber = Math.floor(20 * Math.random());
+//        if (1 == QUsed[QNumber]) { // Still available?
+//       HTMLBlob += this.AddQuestion(QNumber, QCount);
+//       QCount++;
+//           QUsed[QNumber] = 0; // Marked as unavailable
+//        }
+//     }
+//     HTMLBlob += "</table>";
+//     this.anchor.innerHTML = HTMLBlob;
+//  }
  
- // This removes any existing quiz on the page
- Questions.prototype.nukeExistingQuiz = function() {
-    if (null != this.anchor && null != this.anchor.childCount) {
-       while (this.anchor.childCount > 0) {
-          this.anchor.removeChild(this.anchor.childNodes[0]);
-       }
-    }
- }
+//  // This removes any existing quiz on the page
+//  Questions.prototype.nukeExistingQuiz = function() {
+//     if (null != this.anchor && null != this.anchor.childCount) {
+//        while (this.anchor.childCount > 0) {
+//           this.anchor.removeChild(this.anchor.childNodes[0]);
+//        }
+//     }
+//  }
  
- // Add this to the DOM
- Questions.prototype.AddQuestion = function(QNum, EntryNum) {
-    // This is really naughty: you should use DOM stuff, and not
-    // non-standard innerHtml ...
-    var Ix;
-    var HTMLBlob = "<tr><td><input type=\"checkbox\" id=\"check" + EntryNum + "\" checked=\"checked\"></td><td>"
-                        + "Question #" + QNum + ":</td><td>"
-                        + "<strong>" + this.QText[QNum] + "</strong></td><td><select id=\"answer" + EntryNum + "\" size=\"1\">"
-                        + "<option selected=\"selected\" value=\"0\">-- Select an answer --</option>"
-    for (Ix=0; Ix<4; Ix++) {
-       HTMLBlob = HTMLBlob + "<option value=\"" + Ix + "\">" + this.QChoice[QNum*4+Ix] + "</option>";
-    }
-    HTMLBlob = HTMLBlob + "</select></td></tr>";
+//  // Add this to the DOM
+//  Questions.prototype.AddQuestion = function(QNum, EntryNum) {
+//     // This is really naughty: you should use DOM stuff, and not
+//     // non-standard innerHtml ...
+//     var Ix;
+//     var HTMLBlob = "<tr><td><input type=\"checkbox\" id=\"check" + EntryNum + "\" checked=\"checked\"></td><td>"
+//                         + "Question #" + QNum + ":</td><td>"
+//                         + "<strong>" + this.QText[QNum] + "</strong></td><td><select id=\"answer" + EntryNum + "\" size=\"1\">"
+//                         + "<option selected=\"selected\" value=\"0\">-- Select an answer --</option>"
+//     for (Ix=0; Ix<4; Ix++) {
+//        HTMLBlob = HTMLBlob + "<option value=\"" + Ix + "\">" + this.QChoice[QNum*4+Ix] + "</option>";
+//     }
+//     HTMLBlob = HTMLBlob + "</select></td></tr>";
     
-    this.thisAns[EntryNum] = this.QAnswer[QNum];
-    return HTMLBlob;
- }
+//     this.thisAns[EntryNum] = this.QAnswer[QNum];
+//     return HTMLBlob;
+//  }
  
  
- // Verify that all questions have been answered
- Questions.prototype.AreQuestionsAnswered = function() {
-    var unanswered = 0;
-    for (var Ix=0; Ix<10; Ix++) {
-       this.Answer[Ix] = document.getElementById("answer" + Ix).selectedIndex;
-       if (this.Answer[Ix] == 0) {
-          unanswered++;
-       }
-    }
-    return unanswered;
- }
+//  // Verify that all questions have been answered
+//  Questions.prototype.AreQuestionsAnswered = function() {
+//     var unanswered = 0;
+//     for (var Ix=0; Ix<10; Ix++) {
+//        this.Answer[Ix] = document.getElementById("answer" + Ix).selectedIndex;
+//        if (this.Answer[Ix] == 0) {
+//           unanswered++;
+//        }
+//     }
+//     return unanswered;
+//  }
  
- // Score the results
- Questions.prototype.ScoreIt = function() {
-    var count = this.AreQuestionsAnswered();
-    if (count > 0) {
-       alert("You didn't answer " + count + " questions. Please try again.");
-       count = 0;
-    } else {
-       for (var Ix=0; Ix<10; Ix++) {
-          if (this.Answer[Ix] == this.thisAns[Ix]) {
-             document.getElementById("check" + Ix).checked = false;
-             count++;
-          } else {
-             document.getElementById("check" + Ix).checked = true;
-          }
-       }
-       alert("You got " + count + " correct.");
-    }
-    return count;
- }
-}
+//  // Score the results
+//  Questions.prototype.ScoreIt = function() {
+//     var count = this.AreQuestionsAnswered();
+//     if (count > 0) {
+//        alert("You didn't answer " + count + " questions. Please try again.");
+//        count = 0;
+//     } else {
+//        for (var Ix=0; Ix<10; Ix++) {
+//           if (this.Answer[Ix] == this.thisAns[Ix]) {
+//              document.getElementById("check" + Ix).checked = false;
+//              count++;
+//           } else {
+//              document.getElementById("check" + Ix).checked = true;
+//           }
+//        }
+//        alert("You got " + count + " correct.");
+//     }
+//     return count;
+//  }
+// }

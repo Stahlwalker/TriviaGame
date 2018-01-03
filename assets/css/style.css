@@ -88,7 +88,7 @@ body {
         border-color: #353533;
         background-color: #585858;
         color: #71fcf0;
-        margin-left: 340px;
+        margin-left: 150px;
         padding-bottom: 40px;
         padding-top: 30px;
         margin-top: 40px;
@@ -99,7 +99,7 @@ body {
     }
 }
 
-@media screen and (max-width: 320px) {
+/* @media screen and (max-width: 320px) {
 
     body {
         background-image: url('../images/DC.jpg');
@@ -123,4 +123,4 @@ body {
     #test{
         color: rgb(154, 226, 38);
     }
-}
+} */

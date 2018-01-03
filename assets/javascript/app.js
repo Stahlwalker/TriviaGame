@@ -51,7 +51,7 @@ var questions = [
     [ "Who is Wade Wilson?", "Deadpool", "Bishop", "Cable", "A" ],
     [ "Who is Peter Quill?", "Groot", "Gamora", "Star Lord", "C" ],
     [ "Which villain is nicknamed Puddin?", "Penguin", "Joker", "Harley Quinn", "B" ],
-    [ "Who kills Superman?", "Doomsday", "Lex Luthor", "Zod", "B" ],
+    [ "Who kills Superman?", "Doomsday", "Lex Luthor", "Zod", "A" ],
     [ "Hal Jordan superhero identity?", "Sinestro", "Green Lantern", "Deadshot", "B" ],
     [ "The Green Arrow's real identity?", "Wally West", "John Stewart", "Oliver Queen", "C" ],
     [ "Who is the Red Hood?", "Jason Todd", "Luke Cage", "Pete Ross", "A" ],
